@@ -2,17 +2,24 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\MapRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MapController extends AbstractController
 {
-    #[Route('/map', name: 'app_map')]
-    public function index(): Response
-    {
-        return $this->render('map/index.html.twig', [
-            'controller_name' => 'MapController',
+    #[Route('/carte', name: 'map.index', methods: ['GET'])]
+    public function index(
+        MapRepository $repository,
+        Request $request
+    ): Response {
+
+        $maps = 
+        $repository->findAll();
+        return $this->render('pages/map/index.html.twig', [
+            'map' => $maps,
         ]);
     }
 }
